@@ -1,0 +1,54 @@
+services:
+  # ==========================================
+  # Ollama - LLM Inference
+  # ==========================================
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./data/ollama:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - OLLAMA_NUM_PARALLEL=4
+      - OLLAMA_MAX_LOADED_MODELS=2
+
+  # ==========================================
+  # n8n - Workflow Automation
+  # ==========================================
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    volumes:
+      - ./data/n8n:/home/node/.n8n
+    environment:
+      - N8N_SECURE_COOKIE=false
+      - WEBHOOK_URL=http://localhost:5678/
+      # Connect to Ollama
+      - OLLAMA_HOST=http://ollama:11434
+
+  # ==========================================
+  # NocoDB - Database / Second Brain
+  # ==========================================
+  nocodb:
+    image: nocodb/nocodb:latest
+    container_name: nocodb
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data/nocodb:/usr/app/data
+    environment:
+      - NC_DB=sqlite3:///usr/app/data/nocodb.db
