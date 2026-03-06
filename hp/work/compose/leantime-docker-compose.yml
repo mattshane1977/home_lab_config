@@ -1,0 +1,43 @@
+services:
+  leantime_db:
+    image: mysql:8.0
+    container_name: leantime_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: leantime
+      MYSQL_USER: leantime
+      MYSQL_PASSWORD: leantime
+    volumes:
+      - leantime_db_data:/var/lib/mysql
+    networks:
+      - leantime_net
+
+  leantime_app:
+    image: leantime/leantime:latest
+    container_name: leantime_app
+    restart: unless-stopped
+    environment:
+      LEAN_DB_HOST: leantime_db
+      LEAN_DB_USER: leantime
+      LEAN_DB_PASSWORD: leantime
+      LEAN_DB_DATABASE: leantime
+      LEAN_SESSION_PASSWORD: changeme_session_secret_32chars!!
+      LEAN_APP_URL: http://10.10.15.103:8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      - leantime_db
+    volumes:
+      - leantime_userfiles:/var/www/html/userfiles
+      - leantime_public_userfiles:/var/www/html/public/userfiles
+    networks:
+      - leantime_net
+
+volumes:
+  leantime_db_data:
+  leantime_userfiles:
+  leantime_public_userfiles:
+
+networks:
+  leantime_net:
