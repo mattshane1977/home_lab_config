@@ -17,7 +17,7 @@ Automated deployment scripts for a three-node Proxmox cluster (`shanehome`).
     - Qdrant (vector database) — port 6333
   - `work` (VM 101, 10.10.15.103) — 16c / 31GB
     - Leantime (project management) — port 8080
-  - `n8n` (VM 102) — 4c / 4GB — standalone n8n instance
+  - `n8n` (VM 102, 10.10.15.169) — 4c / 4GB — n8n workflow automation (bound to localhost, access via Tailscale)
 
 ### Dell (ComfyUI Node) — `dell` — 10.10.15.133
 - **CPU:** Intel Xeon E5-2690 v4
@@ -104,7 +104,7 @@ home_lab_config/
 | Open WebUI | openweb | http://10.10.15.209:3000 | Chat interface for Ollama |
 | Ollama | openweb | http://10.10.15.209:11434 | LLM inference — qwen2.5:32b |
 | Qdrant | openweb | http://10.10.15.209:6333 | Vector database |
-| n8n | openweb | http://10.10.15.209:5678 | Workflow automation |
+| n8n | n8n VM | http://10.10.15.169:5678 | Workflow automation (Tailscale or localhost only) |
 | ComfyUI | comfy | http://10.10.15.113:8188 | Image generation |
 
 ## Cluster Info
