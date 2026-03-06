@@ -27,7 +27,7 @@ Automated deployment scripts for a three-node Proxmox cluster (`shanehome`).
 - **GPUs:** RTX 4060 Ti 16GB, Quadro M4000 8GB
 - **Storage:** 4.8TB (single disk, XFS)
 - **VMs:**
-  - `comfy` (VM 104, 10.10.15.x) — 40c / 66GB — RTX 4060 Ti passthrough
+  - `comfy` (VM 104, 10.10.15.113) — 40c / 66GB — RTX 4060 Ti passthrough
     - ComfyUI
 
 ### Trigkey Mini PC — `trigkey` — 10.10.15.147
@@ -105,7 +105,7 @@ home_lab_config/
 | Whisper API | work | http://10.10.15.103:8001/docs | Audio transcription |
 | Ollama | openweb | http://10.10.15.209:11434 | LLM inference — qwen2.5:32b |
 | n8n | openweb | http://10.10.15.209:5678 | Workflow automation |
-| ComfyUI | comfy | http://10.10.15.x:8188 | Image generation |
+| ComfyUI | comfy | http://10.10.15.113:8188 | Image generation |
 
 ## Cluster Info
 
