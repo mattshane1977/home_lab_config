@@ -13,12 +13,10 @@ Automated deployment scripts for a three-node Proxmox cluster (`shanehome`).
 - **VMs:**
   - `openweb` (VM 100, 10.10.15.209) — 30c / 60GB — P100 + P40 passthrough
     - Ollama — `qwen2.5:32b`, `nomic-embed-text`
-    - n8n (workflow automation)
-    - NocoDB (database/second brain)
+    - Open WebUI — port 3000
+    - Qdrant (vector database) — port 6333
   - `work` (VM 101, 10.10.15.103) — 16c / 31GB
     - Leantime (project management) — port 8080
-    - Joplin Server (notes sync) — port 22300
-    - faster-whisper (audio transcription API) — port 8001
   - `n8n` (VM 102) — 4c / 4GB — standalone n8n instance
 
 ### Dell (ComfyUI Node) — `dell` — 10.10.15.133
@@ -83,17 +81,18 @@ home_lab_config/
 │   ├── config.env                 # HP-specific variables
 │   ├── truenas/
 │   │   └── vm-create.sh           # TrueNAS setup (bare metal, 10.10.15.56)
-│   ├── docker-host/               # openweb VM
-│   │   ├── setup.sh               # Debian VM bootstrap (Docker, NVIDIA, etc.)
+│   ├── docker-host/               # legacy bootstrap scripts
+│   │   ├── setup.sh
 │   │   ├── compose/
 │   │   │   └── docker-compose.yml
 │   │   └── scripts/
 │   │       └── gpu-test.sh        # Verify GPU passthrough
-│   └── work/                      # work VM
-│       ├── setup.sh               # Productivity VM bootstrap
+│   ├── openweb/                   # openweb VM (AI services)
+│   │   └── docker-compose.yml     # Open WebUI + Qdrant
+│   └── work/                      # work VM (productivity)
+│       ├── setup.sh
 │       └── compose/
-│           ├── leantime-docker-compose.yml   # Project management
-│           └── joplin-docker-compose.yml     # Notes + Whisper transcription
+│           └── leantime-docker-compose.yml   # Project management
 ```
 
 ## Service URLs
@@ -102,9 +101,9 @@ home_lab_config/
 |---|---|---|---|
 | TrueNAS | bare metal | http://10.10.15.56 | NAS / storage management |
 | Leantime | work | http://10.10.15.103:8080 | Project management |
-| Joplin Server | work | http://10.10.15.103:22300 | Notes sync — default: admin@localhost / admin |
-| Whisper API | work | http://10.10.15.103:8001/docs | Audio transcription |
+| Open WebUI | openweb | http://10.10.15.209:3000 | Chat interface for Ollama |
 | Ollama | openweb | http://10.10.15.209:11434 | LLM inference — qwen2.5:32b |
+| Qdrant | openweb | http://10.10.15.209:6333 | Vector database |
 | n8n | openweb | http://10.10.15.209:5678 | Workflow automation |
 | ComfyUI | comfy | http://10.10.15.113:8188 | Image generation |
 
