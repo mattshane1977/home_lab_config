@@ -9,8 +9,8 @@ Automated deployment scripts for a three-node Proxmox cluster (`shanehome`).
 - **RAM:** 157GB
 - **GPUs:** Tesla P100 16GB, Tesla P40 24GB
 - **Storage:** 16.4TB MergerFS pool (4 disks) + 702GB local-lvm
+- **Bare metal:** TrueNAS — 10.10.15.56
 - **VMs:**
-  - TrueNAS (virtual disk from local-lvm)
   - `openweb` (VM 100, 10.10.15.209) — 30c / 60GB — P100 + P40 passthrough
     - Ollama — `qwen2.5:32b`, `nomic-embed-text`
     - n8n (workflow automation)
@@ -82,7 +82,7 @@ home_lab_config/
 │   ├── setup.sh                   # HP Proxmox host setup
 │   ├── config.env                 # HP-specific variables
 │   ├── truenas/
-│   │   └── vm-create.sh           # TrueNAS VM creation
+│   │   └── vm-create.sh           # TrueNAS setup (bare metal, 10.10.15.56)
 │   ├── docker-host/               # openweb VM
 │   │   ├── setup.sh               # Debian VM bootstrap (Docker, NVIDIA, etc.)
 │   │   ├── compose/
