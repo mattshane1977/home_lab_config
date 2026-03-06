@@ -100,6 +100,7 @@ home_lab_config/
 
 | Service | Host | URL | Notes |
 |---|---|---|---|
+| TrueNAS | bare metal | http://10.10.15.56 | NAS / storage management |
 | Leantime | work | http://10.10.15.103:8080 | Project management |
 | Joplin Server | work | http://10.10.15.103:22300 | Notes sync — default: admin@localhost / admin |
 | Whisper API | work | http://10.10.15.103:8001/docs | Audio transcription |
